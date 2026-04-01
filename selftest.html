@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>反诈自测 — 抖音电商反诈宣传平台</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-icon">🛡️</div>
+    抖音电商反诈宣传平台
+  </div>
+  <span class="header-tag">官方平台</span>
+</header>
+
+<!-- ===== Card Navigation ===== -->
+<nav class="card-nav">
+  <div class="card-nav-inner">
+    <a class="nav-card" href="index.html">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">首页</span>
+    </a>
+    <a class="nav-card" href="news.html">
+      <span class="nav-icon">📰</span>
+      <span class="nav-label">反诈资讯</span>
+    </a>
+    <a class="nav-card" href="classroom.html">
+      <span class="nav-icon">📚</span>
+      <span class="nav-label">反诈小课堂</span>
+    </a>
+    <a class="nav-card active" href="selftest.html">
+      <span class="nav-icon">✅</span>
+      <span class="nav-label">反诈自测</span>
+    </a>
+    <a class="nav-card" href="report.html">
+      <span class="nav-icon">📣</span>
+      <span class="nav-label">在线举报</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ===== Main Content ===== -->
+<main class="page-container">
+
+  <div style="text-align:center; margin-bottom:28px;">
+    <h2 style="font-size:1.5rem; font-weight:800; color:#161823; margin-bottom:8px;">🧠 反诈能力自测</h2>
+    <p style="color:#666; font-size:.9rem;">共 8 道题，测测你的防骗意识有多强！</p>
+  </div>
+
+  <!-- Quiz Container -->
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-progress">
+      <div class="quiz-progress-fill" id="progressFill" style="width:0%;"></div>
+    </div>
+
+    <div id="quizBody">
+      <p class="quiz-q-num" id="qNum">第 1 题 / 共 8 题</p>
+      <p class="quiz-question" id="qText"></p>
+      <div class="quiz-options" id="qOptions"></div>
+      <div class="quiz-feedback" id="qFeedback"></div>
+      <div style="display:flex; gap:12px; justify-content:flex-end;">
+        <button class="btn btn-primary" id="btnNext" disabled onclick="nextQuestion()">下一题 →</button>
+      </div>
+    </div>
+
+    <div class="quiz-result" id="quizResult">
+      <div class="score-circle">
+        <span class="score-num" id="scoreNum">0</span>
+        <span class="score-max">/ 8 分</span>
+      </div>
+      <h3 id="resultTitle"></h3>
+      <p id="resultDesc"></p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="restartQuiz()">🔄 重新测试</button>
+        <a href="classroom.html" class="btn btn-danger">📚 回顾课堂</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>抖音电商反诈宣传平台 &copy; 2024 &nbsp;|&nbsp; 全国反诈热线：<strong style="color:#25f4ee;">96110</strong></p>
+  <p>遇到诈骗请立即拨打 110 报警，或联系平台官方客服</p>
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "你收到一个陌生电话，对方自称是"抖音客服"，说你的订单存在质量问题，需要给你退款，但要你提供银行卡号和短信验证码，你应该怎么办？",
+    options: ["配合对方操作，毕竟是退款", "挂断电话，通过抖音App官方客服核实", "先提供银行卡号，不提供验证码", "问对方要工号后再配合"],
+    answer: 1,
+    feedback: "✅ 正确！官方客服不会通过电话要求您提供银行卡号或验证码。遇到此类情况，立即挂断，在App内核实。验证码是您账户的最后防线，任何人都无权索取。"
+  },
+  {
+    q: "朋友在微信上发给你一个链接，说是"抖音内部优惠券，点击领取"，你会怎么做？",
+    options: ["立刻点击，优惠券不拿白不拿", "询问朋友链接来源，若是陌生人转发则不点", "让朋友先点试试", "不点，只使用官方App内的活动"],
+    answer: 3,
+    feedback: "✅ 正确！官方优惠活动只在官方App内展示，任何通过私信、微信、短信发来的"优惠链接"都存在钓鱼风险，切勿点击。"
+  },
+  {
+    q: "你在某直播间看到某品牌手机仅售199元（市价约5000元），直播间显示"限时抢购，仅剩5件"，你应该怎么做？",
+    options: ["立刻下单，错过可惜", "先查看主播认证和店铺资质，谨慎购买", "转发给亲友，一起抢购", "直接转账给主播私人账户更快"],
+    answer: 1,
+    feedback: "✅ 正确！超低价是诈骗的典型信号。购买前务必查看蓝V认证、店铺评级和历史评价。切记：正品不可能以1/25的价格出售，不贪便宜是防骗关键。"
+  },
+  {
+    q: "你看到一则兼职广告：帮商家刷单，每单返佣30-100元，只需先垫付购买商品，完成后商家立即退款+佣金。你认为这是：",
+    options: ["靠谱的赚钱机会", "典型的刷单诈骗，应举报", "可以小额尝试，风险不大", "只要商家先打佣金就可以参与"],
+    answer: 1,
+    feedback: "✅ 正确！刷单本身是违法行为，且95%以上的"刷单兼职"都是诈骗。任何要求垫付资金的兼职都应果断拒绝并举报。"
+  },
+  {
+    q: "你在抖音上购买了一件商品，卖家私信你说"发货时发错了，请加我微信私下补差价，比走平台退款快"，你应该：",
+    options: ["加微信，私下补差价更方便", "直接申请平台售后，拒绝私下交易", "先等几天看是否会自动解决", "要求卖家打折扣代替补差价"],
+    answer: 1,
+    feedback: "✅ 正确！任何商家要求"私下解决"都存在诈骗风险。一旦离开平台交易，您将失去所有买家保障，资金无法追回。请始终通过平台官方售后渠道处理纠纷。"
+  },
+  {
+    q: "下列哪种行为在抖音电商中是安全的？",
+    options: ["点击评论区陌生人发的"专属折扣链接"", "在官方App内使用平台支付购买商家商品", "向自称"平台官方"的账号转账交"保证金"", "在直播间私信主播要求"绕过平台"以更低价购买"],
+    answer: 1,
+    feedback: "✅ 正确！在官方App内通过平台支付是唯一安全的交易方式。其他选项均存在诈骗风险。"
+  },
+  {
+    q: "你发现自己刚才被骗转账了5000元，第一步应该做什么？",
+    options: ["先不声张，等骗子主动退款", "立即拨打银行客服冻结账户，然后报警", "自己联系骗子要求退款", "发朋友圈求助"],
+    answer: 1,
+    feedback: "✅ 正确！被骗后应立即：① 拨打银行客服冻结账户防止资金转移 → ② 保存全部证据截图 → ③ 拨打96110或110报警。越快行动，追回资金的可能性越大。"
+  },
+  {
+    q: "以下哪个说法是正确的？",
+    options: ["刷单返现只要本金追回来了就不违法", "平台官方绝对不会主动要求用户转账或提供验证码", "只要对方提供工号就是真客服", "私下转账如果金额小就没关系"],
+    answer: 1,
+    feedback: "✅ 正确！这是识别诈骗的核心常识：平台官方永远不会主动要求用户转账或提供验证码。凡是要求转账或索取验证码的"客服"，均为诈骗。"
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('qNum').textContent = `第 ${current + 1} 题 / 共 ${questions.length} 题`;
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressFill').style.width = `${(current / questions.length) * 100}%`;
+
+  const optionsEl = document.getElementById('qOptions');
+  optionsEl.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = `${['A','B','C','D'][i]}. ${opt}`;
+    btn.onclick = () => selectOption(i, btn);
+    optionsEl.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('qFeedback');
+  feedback.textContent = '';
+  feedback.className = 'quiz-feedback';
+  document.getElementById('btnNext').disabled = true;
+  answered = false;
+}
+
+function selectOption(index, btn) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[current];
+  const allBtns = document.querySelectorAll('.quiz-option');
+  allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+  if (index === q.answer) {
+    btn.classList.add('correct');
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.answer].classList.add('correct');
+  }
+
+  const feedback = document.getElementById('qFeedback');
+  feedback.textContent = q.feedback;
+  feedback.classList.add('show');
+
+  document.getElementById('btnNext').disabled = false;
+  const btnNext = document.getElementById('btnNext');
+  if (current === questions.length - 1) {
+    btnNext.textContent = '查看结果 🎯';
+  }
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizBody').style.display = 'none';
+  const result = document.getElementById('quizResult');
+  result.style.display = 'block';
+  document.getElementById('scoreNum').textContent = score;
+  document.getElementById('progressFill').style.width = '100%';
+
+  let title, desc;
+  if (score >= 7) {
+    title = '🏆 反诈达人！';
+    desc = `你答对了 ${score}/8 题，防骗意识非常强！继续保持，并把防骗知识分享给身边的亲朋好友。`;
+  } else if (score >= 5) {
+    title = '👍 防骗意识良好';
+    desc = `你答对了 ${score}/8 题，防骗意识不错，但仍有提升空间。建议回顾反诈小课堂中答错的知识点。`;
+  } else if (score >= 3) {
+    title = '⚠️ 需要加强学习';
+    desc = `你答对了 ${score}/8 题，存在一定的被骗风险。强烈建议重新学习「反诈小课堂」，提升防骗能力。`;
+  } else {
+    title = '🆘 高风险！请立即学习';
+    desc = `你只答对了 ${score}/8 题，防骗意识薄弱，处于高风险状态。请立即前往「反诈小课堂」认真学习，保护自己的财产安全！`;
+  }
+
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultDesc').textContent = desc;
+}
+
+function restartQuiz() {
+  current = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('quizBody').style.display = 'block';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('btnNext').textContent = '下一题 →';
+  renderQuestion();
+}
+
+// Init
+renderQuestion();
+</script>
+
+</body>
+</html>
